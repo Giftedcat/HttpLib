@@ -34,9 +34,12 @@ public class HttpClientHelper {
     UserApi userApi;
     GeneralApi generalApi;
 
+    MagicBoxObservableCallHelper helper;
+
     Context mContext;
 
     public HttpClientHelper(Context mContext, String apiUrl) {
+        helper = new MagicBoxObservableCallHelper();
         this.mContext = mContext;
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -71,14 +74,14 @@ public class HttpClientHelper {
 
     public void login(Map<String, String> options, IResponseCallBack callBack) {
         Observable<UserResponse> observable = userApi.login(options);
-        RetrofitClient.request(mContext, observable, callBack);
+        RetrofitClient.request(mContext, helper.map(observable), callBack);
     }
 
     public void uploadImage(File file, IResponseCallBack callBack) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
         Observable<GeneralResponse> observable = generalApi.uploadImage(part);
-        RetrofitClient.request(mContext, observable, callBack);
+        RetrofitClient.request(mContext, helper.map(observable), callBack);
     }
 
 

@@ -11,7 +11,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 自定义Subscriber
+ * 自定义Observer
  * @author GiftedCat
  * */
 public class CallBackObserver<T extends BaseResponse> implements Observer<T> {

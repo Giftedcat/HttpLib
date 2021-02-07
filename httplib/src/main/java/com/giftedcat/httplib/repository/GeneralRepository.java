@@ -9,7 +9,6 @@ import com.giftedcat.httplib.net.IResponseCallBack;
 import java.io.File;
 
 /**
- *
  * @author GiftedCat
  * @date 17/2/9
  */
@@ -22,9 +21,7 @@ public class GeneralRepository {
     HttpClientHelper clientHelper;
 
     public static GeneralRepository getInstance(Context mContext) {
-        if (INSTANCE == null) {
-            INSTANCE = new GeneralRepository(mContext);
-        }
+        INSTANCE = new GeneralRepository(mContext);
         return INSTANCE;
     }
 

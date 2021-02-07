@@ -22,9 +22,7 @@ public class UserRepository {
     private Context mContext;
 
     public static UserRepository getInstance(Context mContext, @NonNull UserLocalData userLocalData) {
-        if (INSTANCE == null) {
-            INSTANCE = new UserRepository(mContext, userLocalData);
-        }
+        INSTANCE = new UserRepository(mContext, userLocalData);
         return INSTANCE;
     }
 
