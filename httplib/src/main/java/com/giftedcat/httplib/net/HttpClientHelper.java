@@ -51,10 +51,9 @@ public class HttpClientHelper {
                 .addNetworkInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(@NonNull Chain chain) throws IOException {
-                        Request.Builder builder = chain.request().newBuilder();
+                        Request.Builder builder = EncryptionUtil.newRequestBuilder(chain.request());
 
                         builder.addHeader("Accept-Language", Locale.getDefault().getLanguage());
-                        builder.addHeader("signature", EncryptionUtil.encryptionParams(builder));
 
                         return chain.proceed(builder.build());
                     }

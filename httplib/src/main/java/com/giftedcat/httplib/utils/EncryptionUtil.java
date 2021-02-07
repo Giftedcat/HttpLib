@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -24,14 +25,14 @@ import okhttp3.RequestBody;
 public class EncryptionUtil {
 
     /**
-     * 获取验签值
-     */
-    public static String encryptionParams(Request.Builder builder) throws UnsupportedEncodingException {
+     * 新建Build
+     * */
+    public static Request.Builder newRequestBuilder(Request request) {
+        Request.Builder builder = request.newBuilder();
 
-        FormBody body = (FormBody) (builder.build().body());
+        FormBody body = (FormBody) (request.body());
 
         TreeMap<String, String> options = new TreeMap<>();
-        StringBuffer stringBuffer = new StringBuffer();
 
         options.put("timestamp", String.valueOf(System.currentTimeMillis() / 1000L));
         options.put("appid", "jiabaotu" + BuildConfig.VERSION_NAME);
@@ -39,10 +40,29 @@ public class EncryptionUtil {
 
         addBasicsData(builder, options);
 
-        for (int i = 0; i < body.size(); i++) {
-            /** 添加接口请求数据*/
-            options.put(body.encodedName(i), body.encodedValue(i));
+        if (body != null) {
+            /** 参数在body中，添加接口请求数据*/
+            for (int i = 0; i < body.size(); i++) {
+                options.put(body.encodedName(i), body.encodedValue(i));
+            }
+        } else {
+            HttpUrl params = request.url();
+            /** 参数在url中，添加接口请求数据*/
+            for (int i = 0; i < params.queryParameterNames().size(); i++) {
+                options.put(params.queryParameterName(i), params.queryParameterValue(i));
+            }
         }
+
+        builder.addHeader("signature", encryptionParams(options));
+
+        return builder;
+    }
+
+    /**
+     * 获取验签值
+     */
+    public static String encryptionParams(TreeMap<String, String> options) {
+        StringBuffer stringBuffer = new StringBuffer();
 
         Iterator mIterator = options.entrySet().iterator();
         while (mIterator.hasNext()) {

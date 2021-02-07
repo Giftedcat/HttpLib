@@ -61,7 +61,8 @@ public class ExceptionHandle {
         e1.printStackTrace();
       }
       return ex;
-    } else if (e instanceof java.net.SocketTimeoutException) {
+    }else if (e instanceof java.net.SocketTimeoutException
+            || e instanceof IOException) {
       ex = new OkHttpException(TIMEOUT_ERROR, TIMEOUTMSG);
       return ex;
     } else if (e instanceof JsonParseException
