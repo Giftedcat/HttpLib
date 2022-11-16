@@ -5,10 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.giftedcat.beammvp.bijection.BeamBasePresenter;
 import com.giftedcat.httplib.net.Injection;
 import com.giftedcat.httplib.repository.GeneralRepository;
 import com.giftedcat.httplib.repository.UserRepository;
-import com.jude.beam.expansion.BeamBasePresenter;
 
 
 public class BasePresenter <T> extends BeamBasePresenter<T> {

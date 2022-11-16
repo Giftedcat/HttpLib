@@ -25,3 +25,22 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    //Android configs
+    configs = [
+            compileSdkVersion: 29,
+            minSdkVersion    : 21,
+            targetSdkVersion : 29,
+    ]
+
+    appCompatVersion = '1.0.0'
+    butterknifeVersion = '10.2.1'
+    retrofit2Version = '2.5.0'
+    rxJavaVersion = '2.2.6'
+    rxAndroidVersion = '2.1.0'
+    /** 网络日志打印*/
+    loggingInterceptorVersion = '3.11.0'
+
+
+}

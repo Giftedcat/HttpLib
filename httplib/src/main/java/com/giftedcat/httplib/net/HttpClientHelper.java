@@ -2,21 +2,18 @@ package com.giftedcat.httplib.net;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 import com.giftedcat.httplib.api.GeneralApi;
 import com.giftedcat.httplib.api.UserApi;
 import com.giftedcat.httplib.model.general.GeneralResponse;
 import com.giftedcat.httplib.model.user.UserResponse;
-import com.giftedcat.httplib.utils.EncryptionUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -51,9 +48,10 @@ public class HttpClientHelper {
                 .addNetworkInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(@NonNull Chain chain) throws IOException {
-                        Request.Builder builder = EncryptionUtil.newRequestBuilder(chain.request());
+                        Request.Builder builder = chain.request().newBuilder();
 
-                        builder.addHeader("Accept-Language", Locale.getDefault().getLanguage());
+                        /** 添加头*/
+                        // builder.addHeader("Accept-Language", Locale.getDefault().getLanguage());
 
                         return chain.proceed(builder.build());
                     }
